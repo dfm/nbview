@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width">
+        <title>nbview</title>
+
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.10.1/dist/katex.min.css" integrity="sha384-dbVIfZGuN1Yq7/1Ocstc1lUEm+AT+/rCkibIcC/OmWo5f0EA48Vf8CytHzGrSwbQ" crossorigin="anonymous">
+        <link rel="stylesheet" href="css/prism.css" type="text/css" media="screen" charset="utf-8">
+        <link rel="stylesheet" href="css/notebook.css" type="text/css" media="screen" charset="utf-8">
+        <link rel="stylesheet" href="css/nbview.css?v=1" type="text/css" media="screen" charset="utf-8">
+
+        <script src="js/es5-shim.min.js"></script>
+
+        <!-- The loading of KaTeX is deferred to speed up page rendering -->
+        <script defer src="https://cdn.jsdelivr.net/npm/katex@0.10.1/dist/katex.min.js" integrity="sha384-2BKqo+exmr9su6dir+qCw08N2ZKRucY4PrGQPPWU1A7FtlCGjmEGFqXCv5nyM5Ij" crossorigin="anonymous"></script>
+
+        <!-- To automatically render math in text elements, include the auto-render extension: -->
+        <script defer src="https://cdn.jsdelivr.net/npm/katex@0.10.1/dist/contrib/auto-render.min.js" integrity="sha384-kWPLUVMOks5AQFrykwIup5lo0m3iMkkHrD0uJ4H5cjeGihAutqP0yW0J6dpFiVkI" crossorigin="anonymous"
+            onload="renderMathInElement(document.body);"></script>
+
+        <script src="js/ansi_up.js"></script>
+        <script src="js/marked.min.js"></script>
+        <script src="js/prism.js"></script>
+        <script src="js/notebook.js"></script>
+
+    </head>
+    <body>
+
+
+<script>
+function display_ipynb (url) {
+    fetch(url)
+    .then(function(response) {
+        if (response.ok)
+            return response.json();
+        throw new Error('Network response was not ok.');
+    })
+    .then(function(data) {
+
+        var notebook = nb.parse(data);
+        var rendered = notebook.render();
+        document.body.appendChild(rendered);
+        Prism.highlightAll();
+    })
+    .catch(function(error) {
+        console.log(error);
+    });
+}
+display_ipynb('https://raw.githubusercontent.com/dfm/exoplanet/master/docs/_static/notebooks/rv.ipynb');
+</script>
+
+    </body>
+</html>
