@@ -5,50 +5,60 @@
         <meta name="viewport" content="width=device-width">
         <title>nbview</title>
 
+        <link rel="stylesheet" href="css/normalize.css" type="text/css" media="screen" charset="utf-8">
+
+        <!-- KaTeX -->
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.10.1/dist/katex.min.css" integrity="sha384-dbVIfZGuN1Yq7/1Ocstc1lUEm+AT+/rCkibIcC/OmWo5f0EA48Vf8CytHzGrSwbQ" crossorigin="anonymous">
-        <link rel="stylesheet" href="css/prism.css" type="text/css" media="screen" charset="utf-8">
-        <link rel="stylesheet" href="css/notebook.css" type="text/css" media="screen" charset="utf-8">
-        <link rel="stylesheet" href="css/nbview.css?v=1" type="text/css" media="screen" charset="utf-8">
+        <script defer src="//cdn.jsdelivr.net/npm/katex@0.10.1/dist/katex.min.js" integrity="sha384-2BKqo+exmr9su6dir+qCw08N2ZKRucY4PrGQPPWU1A7FtlCGjmEGFqXCv5nyM5Ij" crossorigin="anonymous"></script>
+        <script defer src="//cdn.jsdelivr.net/npm/katex@0.10.1/dist/contrib/auto-render.min.js" integrity="sha384-kWPLUVMOks5AQFrykwIup5lo0m3iMkkHrD0uJ4H5cjeGihAutqP0yW0J6dpFiVkI" crossorigin="anonymous" onload="renderMathInElement(document.body);"></script>
 
-        <script src="js/es5-shim.min.js"></script>
-
-        <!-- The loading of KaTeX is deferred to speed up page rendering -->
-        <script defer src="https://cdn.jsdelivr.net/npm/katex@0.10.1/dist/katex.min.js" integrity="sha384-2BKqo+exmr9su6dir+qCw08N2ZKRucY4PrGQPPWU1A7FtlCGjmEGFqXCv5nyM5Ij" crossorigin="anonymous"></script>
-
-        <!-- To automatically render math in text elements, include the auto-render extension: -->
-        <script defer src="https://cdn.jsdelivr.net/npm/katex@0.10.1/dist/contrib/auto-render.min.js" integrity="sha384-kWPLUVMOks5AQFrykwIup5lo0m3iMkkHrD0uJ4H5cjeGihAutqP0yW0J6dpFiVkI" crossorigin="anonymous"
-            onload="renderMathInElement(document.body);"></script>
+        <!--  code highlighting -->
+        <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/styles/default.min.css">
+        <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/highlight.min.js"></script>
 
         <script src="js/ansi_up.js"></script>
         <script src="js/marked.min.js"></script>
-        <script src="js/prism.js"></script>
         <script src="js/notebook.js"></script>
+
+        <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet">
+        <link rel="stylesheet" href="css/notebook.css?v=2" type="text/css" media="screen" charset="utf-8">
+        <link rel="stylesheet" href="css/nbview.css?v=4" type="text/css" media="screen" charset="utf-8">
 
     </head>
     <body>
 
+        <div id="header">
+            <div class="inner">
+                <h1>nbview</h1>
+                <h2>Jupyter notebooks rendered right in your browser</h2>
+                <div id="urlstuff">
+                <p>Currently viewing:<br>
+                <span id="urlname"></span></p>
+                </div>
+            </div>
+        </div>
 
-<script>
-function display_ipynb (url) {
-    fetch(url)
-    .then(function(response) {
-        if (response.ok)
-            return response.json();
-        throw new Error('Network response was not ok.');
-    })
-    .then(function(data) {
+        <div id="notebook"></div>
 
-        var notebook = nb.parse(data);
-        var rendered = notebook.render();
-        document.body.appendChild(rendered);
-        Prism.highlightAll();
-    })
-    .catch(function(error) {
-        console.log(error);
-    });
-}
-display_ipynb('https://raw.githubusercontent.com/dfm/exoplanet/master/docs/_static/notebooks/rv.ipynb');
-</script>
+        <div id="error" class="inner"></div>
+
+        <div id="search" class="inner">
+            <form>
+                <p>Enter a URL:</p>
+            <input type="text" placeholder="Enter a URL that points to a Jupyter notebook..." name="url" id="urlbar">
+            </form>
+        </div>
+
+
+        <div id="footer">
+            <div class="inner">
+                Made by <a href="https://dfm.io">Dan F-M</a>.<br>
+                See the source on GitHub: <a href="https://github.com/dfm/nbview">dfm/nbview</a>.<br>
+                This wouldn't have been possible without <a href="https://github.com/jsvine/notebookjs">notebook.js</a> by <a href="https://github.com/jsvine">jsvine</a>.
+            </div>
+        </div>
+
+<script src="js/nbview.js"></script>
 
     </body>
 </html>
